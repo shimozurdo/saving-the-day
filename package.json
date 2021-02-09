@@ -1,0 +1,26 @@
+{
+  "name": "saving-the-day",
+  "version": "0.0.1",
+  "description": "Game",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --open=src/index.html",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shimozurdo/saving-the-day.git"
+  },
+  "author": "shimozurdo",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "live-server": "^1.2.1",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
