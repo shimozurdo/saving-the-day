@@ -17,6 +17,24 @@ export default class Title extends Phaser.Scene {
         this.flashElement = flashElement.bind(this)
     }
     create() {
+        const { width, height } = this
+        if (this.game.debugMode)
+            this.add.image(0, 0, 'guide').setOrigin(0).setDepth(1)
+
+        // HANDLER SCENE            
+        this.scale.on('resize', this.resize, this)
+
+        const scaleWidth = this.scale.gameSize.width
+        const scaleHeight = this.scale.gameSize.height
+
+        this.parent = new Phaser.Structs.Size(scaleWidth, scaleHeight)
+        this.sizer = new Phaser.Structs.Size(width, height, Phaser.Structs.Size.FIT, this.parent)
+
+        this.parent.setSize(scaleWidth, scaleHeight)
+        this.sizer.setSize(scaleWidth, scaleHeight)
+
+        this.updateCamera()
+        // HANDLER SCENE
 
         // // Config for paralax backgrounds
 

@@ -2,7 +2,7 @@ export default class Handler extends Phaser.Scene {
 
     // Vars
     sceneRunning = null;
-    
+
     constructor() {
         super("handler");
     }
@@ -22,7 +22,7 @@ export default class Handler extends Phaser.Scene {
         const camera = this.cameras.main;
         const zoom = this.gameScene.getZoom();
         camera.setZoom(zoom);
-        camera.centerOn(this.game.screenBaseSize.maxHeight / 2, this.game.screenBaseSize.minHeight / 2);
+        camera.centerOn(this.game.screenBaseSize.maxWidth / 2, this.game.screenBaseSize.minWidth / 2);
     }
 
 }

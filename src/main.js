@@ -4,13 +4,13 @@ import Preload from './scenes/preload.js'
 import Hub from './scenes/hub.js'
 // import Menu from './scenes/menu.js'
 
-// Aspect Ratio 4:3
+// Aspect Ratio 16:9
 const MAX_SIZE_WIDTH_SCREEN = 1920
-const MAX_SIZE_HEIGHT_SCREEN = 1440
-const MIN_SIZE_WIDTH_SCREEN = 480
+const MAX_SIZE_HEIGHT_SCREEN = 1080
+const MIN_SIZE_WIDTH_SCREEN = 640
 const MIN_SIZE_HEIGHT_SCREEN = 360
-const SIZE_WIDTH_SCREEN = 800
-const SIZE_HEIGHT_SCREEN = 600
+const SIZE_WIDTH_SCREEN = 960
+const SIZE_HEIGHT_SCREEN = 540
 
 const config = {
     type: Phaser.AUTO,
@@ -41,7 +41,7 @@ const config = {
 const game = new Phaser.Game(config)
 
 // Global Vars
-game.debugMode = false
+game.debugMode = true
 game.embedded = true // game is embedded into a html iframe/object
 
 game.showfadeOutBg = false
