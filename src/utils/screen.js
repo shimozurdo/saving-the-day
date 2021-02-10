@@ -1,4 +1,3 @@
-
 /**
  * Configures fullscreen in a scene
  */
