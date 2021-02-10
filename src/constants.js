@@ -1,4 +1,17 @@
 const CONST = {
+    color: {
+        BG: '#FFFFFF',
+    },
+    dificulty: {
+        EASY: 0,
+        NORMAL: 1,
+        HARD: 2,
+    },
+    statusGame: {
+        STARTING: 0,
+        RUNNING: 1,
+        PAUSE: 2,
+    },
     ANIM: {
         WALK: "walk",
         FLY: "fly",

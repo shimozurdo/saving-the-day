@@ -1,0 +1,28 @@
+export default class Handler extends Phaser.Scene {
+
+    // Vars
+    sceneRunning = null;
+    
+    constructor() {
+        super("handler");
+    }
+
+    create() {
+        this.cameras.main.setBackgroundColor("#FFF");
+        this.launchScene("preload");
+        this.launchScene("hub");
+    }
+
+    launchScene(scene, data) {
+        this.scene.launch(scene, data);
+        this.gameScene = this.scene.get(scene);
+    }
+
+    updateCamera() {
+        const camera = this.cameras.main;
+        const zoom = this.gameScene.getZoom();
+        camera.setZoom(zoom);
+        camera.centerOn(this.game.screenBaseSize.maxHeight / 2, this.game.screenBaseSize.minHeight / 2);
+    }
+
+}
