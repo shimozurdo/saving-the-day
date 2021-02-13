@@ -1,16 +1,19 @@
 import { fullScreen } from "../utils/screen.js"
 import { pointerUp } from "../utils/buttons.js"
-import constants from "../constants.js"
 
 export default class Hub extends Phaser.Scene {
-   
+
+    // Vars
+    soundBtn = null
+    music = null
+    handlerScene = null
     constructor() {
         super("hub")
     }
 
     preload() {
         // Images        
-        this.load.spritesheet("sound", "assets/sound.png", { frameWidth: 48, frameHeight: 48 })
+        this.load.spritesheet("sound", "assets/images/sound.png", { frameWidth: 48, frameHeight: 48 })
         // Audio
         this.load.audio("intro-theme", ["assets/intro-theme.mp3", "assets/intro-theme.ogg"]);
         //---------------------------------------------------------------------->
@@ -35,7 +38,7 @@ export default class Hub extends Phaser.Scene {
         })
 
         let posItemHubBase = 32
-        
+
         let multiplePosY = this.game.embedded ? 1 : 3
         this.soundBtn = this.add.image(this.canvasWidth - posItemHubBase, posItemHubBase * multiplePosY, "sound").setOrigin(.5).setDepth(1).setInteractive({ cursor: "pointer" })
         this.soundBtn.visible = false
@@ -99,11 +102,8 @@ export default class Hub extends Phaser.Scene {
         if (this.handlerScene.sceneRunning === 'title') {
             this.soundBtn.visible = true
             this.creditsTxt.visible = false
-            if (!this.game.sceneTitleStarted) {
-                this.prepareFadeOutBg()
-            }
         } else if (this.handlerScene.sceneRunning === 'menu') {
-            
+
         }
 
         if (this.game.showfadeOutBg && fadeOutBox.canStartFade) {
@@ -129,7 +129,7 @@ export default class Hub extends Phaser.Scene {
         switch (sceneTxt) {
             case "title":
                 this.creditsTxt.visible = false
-                return
+                break
             case "menu":
                 gotoScene = "title"
                 break
@@ -149,10 +149,6 @@ export default class Hub extends Phaser.Scene {
         this.soundBtn.x = this.scale.gameSize.width - 30
         this.creditsTxt.x = this.scale.gameSize.width / 2
         this.creditsTxt.y = this.scale.gameSize.height - 30
-    }
-
-    getZoom() {
-        return this.cameras.main.zoom
     }
 
 }

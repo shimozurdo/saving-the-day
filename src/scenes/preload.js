@@ -48,7 +48,7 @@ export default class Preload extends Phaser.Scene {
         this.load.spritesheet('gears', 'assets/gears.png', { frameWidth: 32, frameHeight: 32 })
         // fonts
         this.load.bitmapFont('gem', 'assets/gem.png', 'assets/gem.xml')
-        // Json
+        // json
         this.load.tilemapTiledJSON('map', 'assets/tileMap.json')
         // audio
         this.load.audio('pleasant-creek-loop', ['assets/pleasant-creek-loop.mp3', 'assets/pleasant-creek-loop.ogg'])
@@ -81,6 +81,8 @@ export default class Preload extends Phaser.Scene {
             this.time.addEvent({
                 delay: this.game.debugMode ? 3000 : 4000,
                 callback: () => {
+                    const hubScene = this.scene.get('hub')
+                    hubScene.prepareFadeOutBg()
                     this.sceneStopped = true
                     this.scene.stop('preload')
                     this.handlerScene.launchScene('title')
@@ -90,7 +92,7 @@ export default class Preload extends Phaser.Scene {
         })
 
         //binding actions to this scene
-        this.createAnimation = createAnimation.bind(this)
+        this.createAnimation = createAnimation.bind(this);
     }
 
     create() {

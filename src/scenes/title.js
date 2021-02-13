@@ -3,6 +3,10 @@ import { flashElement } from '../utils/common.js'
 import CONST from '../constants.js'
 
 export default class Title extends Phaser.Scene {
+
+    // Vars
+    handlerScene = false
+    sceneStopped = false
     constructor() {
         super({ key: 'title' })
     }
@@ -23,6 +27,8 @@ export default class Title extends Phaser.Scene {
         if (this.game.debugMode)
             this.add.image(0, 0, 'guide').setOrigin(0).setDepth(1)
         // CONFIG SCENE 
+
+        //this.cameras.main.setBackgroundColor("#000");
 
         // // Config for paralax backgrounds
 

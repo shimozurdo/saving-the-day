@@ -16,6 +16,7 @@ export default class Handler extends Phaser.Scene {
     launchScene(scene, data) {
         this.scene.launch(scene, data);
         this.gameScene = this.scene.get(scene);
+        this.scene.moveUp('hub');
     }
 
     updateResize(scene) {
@@ -42,7 +43,7 @@ export default class Handler extends Phaser.Scene {
             this.parent.setSize(width, height)
             this.sizer.setSize(width, height)
 
-            // updateCamera - Improve this
+            // updateCamera - Improve the next code
             const camera = this.cameras.main
             const scaleX = this.sizer.width / this.game.screenBaseSize.width
             const scaleY = this.sizer.height / this.game.screenBaseSize.height
