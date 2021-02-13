@@ -14,6 +14,7 @@ const SIZE_HEIGHT_SCREEN = 540
 
 const config = {
     type: Phaser.AUTO,
+    pixelArt: true,
     scale: {
         mode: Phaser.Scale.RESIZE,
         parent: 'game',

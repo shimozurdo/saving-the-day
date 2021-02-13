@@ -53,7 +53,8 @@ export default class Preload extends Phaser.Scene {
         // audio
         this.load.audio('pleasant-creek-loop', ['assets/pleasant-creek-loop.mp3', 'assets/pleasant-creek-loop.ogg'])
         this.load.audio('intro-theme', ['assets/intro-theme.mp3', 'assets/intro-theme.ogg'])
-        //---------------------------------------------------------------------->
+        //---------------------------------------------------------------------->        
+
         this.canvasWidth = this.sys.game.canvas.width
         this.canvasHeight = this.sys.game.canvas.height
 

@@ -7,13 +7,17 @@ export default class Title extends Phaser.Scene {
     // Vars
     handlerScene = false
     sceneStopped = false
+
     constructor() {
         super({ key: 'title' })
     }
+
     preload() {
         this.sceneStopped = false
         this.width = this.game.screenBaseSize.width
         this.height = this.game.screenBaseSize.height
+        this.canvasWidth = this.sys.game.canvas.width
+        this.canvasHeight = this.sys.game.canvas.height
         this.handlerScene = this.scene.get('handler')
         this.handlerScene.sceneRunning = 'title'
         // Bindings
@@ -21,183 +25,64 @@ export default class Title extends Phaser.Scene {
         this.flashElement = flashElement.bind(this)
     }
     create() {
-        const { width, height } = this
+        const { width, height, canvasWidth, canvasHeight } = this
         // CONFIG SCENE         
         this.handlerScene.updateResize(this)
         if (this.game.debugMode)
             this.add.image(0, 0, 'guide').setOrigin(0).setDepth(1)
         // CONFIG SCENE 
 
-        //this.cameras.main.setBackgroundColor("#000");
+        // GAME OBJECTS
 
-        // // Config for paralax backgrounds
+        // paralax backgrounds    
+        // Find the center of the top space
+        const topBackgroundXOrigin = canvasWidth / 2
+        const topBackgroundYOrigin = height / 3
+        // Base width and height of the images
+        const imageBaseWidth = this.game.screenBaseSize.maxWidth
+        const imageBaseHeight = 720
 
-        // // Get the window sizes
-        // const windowWidth = window.innerWidth;
-        // const windowHeight = window.innerHeight;
+        this.titleBg = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, 'title-background')
 
-        // // Find the center of the top space
-        // const topBackgroundXOrigin = windowWidth / 2;
-        // const topBackgroundYOrigin = (windowHeight / 5) * 1.5;
-        // const topBackgroundHeight = (windowHeight / 5) * 3;
+        this.highwayBg = this.add.tileSprite(topBackgroundXOrigin, height - 48, imageBaseWidth, 96, 'highway')
 
-        // // Base width and height of the images
-        // const imageBaseWidth = 1280;
-        // const imageBaseHeight = 720;
-        // const heightRatio = topBackgroundHeight / imageBaseHeight;
+        const titleText = this.add.bitmapText(width / 2, (height / 2) - 100, 'gem', 'Saving the day', 40).setOrigin(0.5)
+        titleText.setTint(0xFEAE34)
 
-        // this.titleBg = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, "title-background");
-        // this.titleBg.setScrollFactor(0);
+        const titleTextB = this.add.bitmapText(width / 2, (height / 2) - 102, 'gem', 'Saving the day', 40).setOrigin(0.5)
+        titleTextB.setTint(0x353D56)
 
-        // this.highwayBg = this.add.tileSprite(topBackgroundXOrigin, this.height - 40, imageBaseWidth, 96, "highway");
-        // this.highwayBg.setScrollFactor(0);
+        this.tweens.add({
+            targets: titleText,
+            alpha: { from: .2, to: 1 },
+            props: {
+                y: { value: '+=10', duration: 2000, ease: 'Sine.easeInOut' },
+            },
+            ease: 'Linear',
+            duration: 2000,
+            repeat: -1,
+            yoyo: true
+        })
 
-        const titleText = this.add.bitmapText(this.width / 2, (this.height / 2) - 100, "gem", "Saving the day", 40).setOrigin(0.5);
-        titleText.setTint(0xFEAE34);
+        this.tweens.add({
+            targets: titleTextB,
+            props: {
+                y: { value: '+=10', duration: 2000, ease: 'Sine.easeInOut' },
+            },
+            duration: 2000,
+            repeat: -1,
+            yoyo: true
+        })
 
-        const titleTextB = this.add.bitmapText(this.width / 2, (this.height / 2) - 102, "gem", "Saving the day", 40).setOrigin(0.5);
-        titleTextB.setTint(0x353D56);
-
-        // this.tweens.add({
-        //     targets: titleText,
-        //     alpha: { from: .2, to: 1 },
-        //     props: {
-        //         y: { value: "+=10", duration: 2000, ease: "Sine.easeInOut" },
-        //     },
-        //     ease: "Linear",
-        //     duration: 2000,
-        //     repeat: -1,
-        //     yoyo: true
-        // });
-
-        // this.tweens.add({
-        //     targets: titleTextB,
-        //     props: {
-        //         y: { value: "+=10", duration: 2000, ease: "Sine.easeInOut" },
-        //     },
-        //     duration: 2000,
-        //     repeat: -1,
-        //     yoyo: true
-        // });        
-
-        // const playBtn = this.add.sprite(this.width / 2, this.height / 2, "button").setOrigin(0.5).setInteractive({ cursor: "pointer" });;
-        // const playTxt = this.add.bitmapText(playBtn.x, playBtn.y - 10, "gem", "Play", 34).setOrigin(.5);
-        // playTxt.setTint(0x353D56);
-
-        // playBtn.on("pointerover", function () {
-        //     this.setTint(0xFEAE34);
-        // });
-
-        // playBtn.on("pointerout", function () {
-        //     this.clearTint();
-        // });
-
-        // playBtn.on("pointerup", function () {
-        //     this.game.sound.stopAll();
-        //     this.scene.start("gameScene");
-        // }, this);
-
-        // this.memok = this.add.sprite(this.width / 2, this.height - 80, "memok").setOrigin(0.5);
-        // this.memok.play(CONST.ANIM.FLY + "-memok");
-
-        // this.add.bitmapText(this.width / 2, this.height - 10, "gem", "A game by shimozurdo", 18).setOrigin(.5);
+        this.memok = this.add.sprite(width / 2, height - 80, 'memok').setOrigin(0.5)
+        this.memok.play(CONST.ANIM.FLY + '-memok')
+        // GAME OBJECTS
 
     }
 
+    update(t, dt) {
+        this.titleBg.tilePositionX += dt * .08
+        this.highwayBg.tilePositionX += dt * .05
+    }
+
 }
-
-
-
-// import CONST from './const.js'
-
-// const titleScene = new Phaser.Class({
-//     Extends: Phaser.Scene,
-//     initialize:
-//         function titleScene() {
-//             Phaser.Scene.call(this, "titleScene");
-//         },
-//     preload: function () {
-//         this.width = this.cameras.main.width;
-//         this.height = this.cameras.main.height;
-//     },
-//     create: function () {
-
-//         // Config for paralax backgrounds
-
-//         // Get the window sizes
-//         const windowWidth = window.innerWidth;
-//         const windowHeight = window.innerHeight;
-
-//         // Find the center of the top space
-//         const topBackgroundXOrigin = windowWidth / 2;
-//         const topBackgroundYOrigin = (windowHeight / 5) * 1.5;
-//         const topBackgroundHeight = (windowHeight / 5) * 3;
-
-//         // Base width and height of the images
-//         const imageBaseWidth = 1280;
-//         const imageBaseHeight = 720;
-//         const heightRatio = topBackgroundHeight / imageBaseHeight;
-
-//         this.titleBg = this.add.tileSprite(topBackgroundXOrigin, topBackgroundYOrigin, imageBaseWidth, imageBaseHeight, "title-background");
-//         this.titleBg.setScrollFactor(0);
-
-//         this.highwayBg = this.add.tileSprite(topBackgroundXOrigin, this.height - 40, imageBaseWidth, 96, "highway");
-//         this.highwayBg.setScrollFactor(0);
-
-//         const titleText = this.add.bitmapText(this.width / 2, (this.height / 2) - 100, "gem", "Saving the day", 40).setOrigin(0.5);
-//         titleText.setTint(0xFEAE34);
-
-//         const titleTextB = this.add.bitmapText(this.width / 2, (this.height / 2) - 102, "gem", "Saving the day", 40).setOrigin(0.5);
-//         titleTextB.setTint(0x353D56);
-
-//         this.tweens.add({
-//             targets: titleText,
-//             alpha: { from: .2, to: 1 },
-//             props: {
-//                 y: { value: "+=10", duration: 2000, ease: "Sine.easeInOut" },
-//             },
-//             ease: "Linear",
-//             duration: 2000,
-//             repeat: -1,
-//             yoyo: true
-//         });
-
-//         this.tweens.add({
-//             targets: titleTextB,
-//             props: {
-//                 y: { value: "+=10", duration: 2000, ease: "Sine.easeInOut" },
-//             },
-//             duration: 2000,
-//             repeat: -1,
-//             yoyo: true
-//         });        
-
-//         const playBtn = this.add.sprite(this.width / 2, this.height / 2, "button").setOrigin(0.5).setInteractive({ cursor: "pointer" });;
-//         const playTxt = this.add.bitmapText(playBtn.x, playBtn.y - 10, "gem", "Play", 34).setOrigin(.5);
-//         playTxt.setTint(0x353D56);
-
-//         playBtn.on("pointerover", function () {
-//             this.setTint(0xFEAE34);
-//         });
-
-//         playBtn.on("pointerout", function () {
-//             this.clearTint();
-//         });
-
-//         playBtn.on("pointerup", function () {
-//             this.game.sound.stopAll();
-//             this.scene.start("gameScene");
-//         }, this);
-
-//         this.memok = this.add.sprite(this.width / 2, this.height - 80, "memok").setOrigin(0.5);
-//         this.memok.play(CONST.ANIM.FLY + "-memok");
-
-//         this.add.bitmapText(this.width / 2, this.height - 10, "gem", "A game by shimozurdo", 18).setOrigin(.5);
-
-//     }, update: function () {
-//         this.titleBg.tilePositionX += .5;
-//         this.highwayBg.tilePositionX += .3;
-//     }
-// });
-
-// export default titleScene;
